@@ -39,10 +39,14 @@ const Navbar = () => {
             </Link>
           </li>
 
-          <li className="cursor-pointer hover:text-blue-600 transition">
-            <FaUserCircle className="text-3xl" />
+           <li>
+          <Link to="/profile">
+            <FaUserCircle className="text-3xl hover:text-pink-600 transition" />
+          </Link>
           </li>
         </ul>
+
+     
 
         {/* Mobile Menu Icon */}
         <button className="md:hidden">

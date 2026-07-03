@@ -7,6 +7,7 @@ import Services from "./pages/Services";
 import ServiceDetails from "./pages/ServiceDetails";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/service-details" element={<ServiceDetails />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
