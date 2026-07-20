@@ -1,7 +1,42 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+   
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = async () => {
+    try {
+      const data = await loginUser(formData);
+
+      login(data.user, data.token);
+
+      alert("Login Successful");
+
+      navigate("/");
+      
+    } catch (error) {
+      alert(
+        error.response?.data?.message || "Login Failed"
+      );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
@@ -15,7 +50,6 @@ const Login = () => {
           Login to your account
         </p>
 
-        {/* Email */}
         <div className="mb-5">
           <label className="block mb-2 font-medium">
             Email
@@ -23,12 +57,14 @@ const Login = () => {
 
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Enter your email"
             className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500"
           />
         </div>
 
-        {/* Password */}
         <div className="mb-2">
           <label className="block mb-2 font-medium">
             Password
@@ -36,12 +72,14 @@ const Login = () => {
 
           <input
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="Enter your password"
             className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500"
           />
         </div>
 
-        {/* Forgot Password */}
         <div className="text-right mb-6">
           <a
             href="#"
@@ -51,23 +89,23 @@ const Login = () => {
           </a>
         </div>
 
-        {/* Login Button */}
-        <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+        >
           Login
         </button>
 
-        {/* Divider */}
         <div className="my-6 flex items-center">
           <hr className="flex-1" />
           <span className="mx-3 text-gray-400">OR</span>
           <hr className="flex-1" />
         </div>
 
-        {/* Register */}
         <Link to="/register">
-           <button className="w-full border-2 border-pink-600 text-pink-600 py-3 rounded-lg hover:bg-pink-600 hover:text-white transition">
-           Create New Account
-           </button>
+          <button className="w-full border-2 border-pink-600 text-pink-600 py-3 rounded-lg hover:bg-pink-600 hover:text-white transition">
+            Create New Account
+          </button>
         </Link>
 
       </div>

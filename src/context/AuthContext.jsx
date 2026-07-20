@@ -1,25 +1,27 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
-  const [user, setUser] = useState({
-    id: 1,
-    name: "Anshuman Kushwaha",
-    email: "anshuman@gmail.com",
-    phone: "9876543210",
-    city: "Prayagraj",
-    role: "customer",
-    profile:
-      "https://i.pravatar.cc/200?img=12",
-  });
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
 
-  const login = (userData) => {
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  const login = (userData, token) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token);
     setUser(userData);
   };
 
   const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
   };
 

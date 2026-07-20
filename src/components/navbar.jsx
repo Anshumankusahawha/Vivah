@@ -39,6 +39,14 @@ const Navbar = () => {
             </Link>
           </li>
 
+          <li>
+            <Link to="/vendor/login">
+             <button className="border-2 border-pink-600 text-pink-600 px-5 py-2 rounded-lg hover:bg-pink-600 hover:text-white transition">
+             Become a Vendor
+             </button>
+           </Link>
+          </li>
+
            <li>
           <Link to="/profile">
             <FaUserCircle className="text-3xl hover:text-pink-600 transition" />
